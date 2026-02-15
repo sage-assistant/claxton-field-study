@@ -49,7 +49,8 @@
       align-items: center;
       justify-content: center;
       text-align: center;
-      padding: 2rem;
+      padding: 1rem;
+      overflow-y: auto;
       transition: opacity 0.8s, visibility 0.8s;
     }
     .splash.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
@@ -859,6 +860,16 @@
       .treaty-signatories { gap: 1rem; }
       .containment-box { padding: 1.5rem; }
       .splash-warning { font-size: 0.65rem; padding: 0.5rem 1rem; }
+      .splash { padding: 0.75rem; justify-content: flex-start; padding-top: 1rem; }
+      .splash-stamp { width: 70px; height: 70px; border-width: 2px; margin-bottom: 0.75rem; }
+      .splash-stamp::after { border-width: 1px; inset: 3px; }
+      .splash-stamp-text { font-size: 0.5rem; }
+      .splash-header { font-size: 0.6rem; letter-spacing: 2px; margin-bottom: 0.75rem; }
+      .splash h1 { font-size: 1.2rem; }
+      .splash h2 { font-size: 0.8rem; margin-bottom: 0.75rem; }
+      .splash p { font-size: 0.75rem; margin-bottom: 1rem; line-height: 1.5; }
+      .enter-btn { padding: 0.75rem 1.5rem; font-size: 0.8rem; }
+      .splash-footer { font-size: 0.5rem; position: relative; bottom: auto; margin-top: 1rem; }
     }
   </style>
 </head>
