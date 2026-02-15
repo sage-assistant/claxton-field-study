@@ -116,6 +116,10 @@
       font-family: 'Special Elite', monospace;
       font-size: 1rem; letter-spacing: 2px; text-transform: uppercase;
       cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
+      user-select: none;
+      -webkit-user-select: none;
       transition: transform 0.3s, box-shadow 0.3s, background 0.3s;
     }
     .enter-btn:hover {
@@ -877,7 +881,7 @@
     under the Endangered Genius Species Act of 2003. This specimen has been classified at
     the highest possible threat level: Inspirational.
   </p>
-  <button class="enter-btn" onclick="enterSite()">Access Field Report</button>
+  <button class="enter-btn" id="enterBtn" onclick="enterSite()">Access Field Report</button>
   <div class="splash-footer">
     CPWA Document Clearance Level: Extraordinary &bull; United Nations Resolution 4471 &bull;
     "In the event of direct contact with the specimen, do not attempt to out-mentor him. You will fail."
@@ -1625,6 +1629,12 @@
 
 <script>
   // ========== SPLASH ==========
+  // Ensure button works on mobile
+  document.getElementById('enterBtn').addEventListener('touchend', function(e) {
+    e.preventDefault();
+    enterSite();
+  });
+
   function enterSite() {
     document.getElementById('splash').classList.add('hidden');
     document.getElementById('mainContent').classList.add('visible');
