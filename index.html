@@ -1,0 +1,1588 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CLASSIFIED: Field Study #4471 — Claxtonus Technologicus</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Source+Sans+3:wght@300;400;600;700&family=Special+Elite&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --parchment: #f4edd3;
+      --parchment-dark: #e8dfc4;
+      --khaki: #b5a67d;
+      --khaki-dark: #8a7d5a;
+      --green-deep: #2d4a22;
+      --green-mid: #3d6b2e;
+      --green-light: #5a8a4a;
+      --orange: #c4652a;
+      --orange-soft: rgba(196,101,42,0.15);
+      --brown: #4a3728;
+      --brown-light: #6b5340;
+      --text: #2a2318;
+      --text-dim: #6b5f4e;
+      --ink: #1a1408;
+      --red-stamp: #8b2020;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Source Sans 3', sans-serif;
+      background: var(--parchment);
+      color: var(--text);
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    /* SPLASH SCREEN */
+    .splash {
+      position: fixed;
+      inset: 0;
+      background: var(--green-deep);
+      z-index: 10000;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 2rem;
+      transition: opacity 0.8s, visibility 0.8s;
+    }
+
+    .splash.hidden {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    .splash-stamp {
+      width: 120px;
+      height: 120px;
+      border: 4px solid var(--red-stamp);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 2rem;
+      animation: pulse-stamp 2.5s ease-in-out infinite;
+      position: relative;
+    }
+
+    .splash-stamp::after {
+      content: '';
+      position: absolute;
+      inset: 6px;
+      border: 2px solid var(--red-stamp);
+      border-radius: 50%;
+    }
+
+    .splash-stamp-text {
+      font-family: 'Special Elite', monospace;
+      color: var(--red-stamp);
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+
+    @keyframes pulse-stamp {
+      0%, 100% { transform: scale(1) rotate(0deg); }
+      50% { transform: scale(1.05) rotate(2deg); }
+    }
+
+    .splash-header {
+      font-family: 'Special Elite', monospace;
+      font-size: 0.85rem;
+      color: var(--khaki);
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+    }
+
+    .splash h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.8rem, 5vw, 3.2rem);
+      color: var(--parchment);
+      margin-bottom: 0.5rem;
+      font-weight: 900;
+    }
+
+    .splash h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1rem, 2.5vw, 1.4rem);
+      color: var(--khaki);
+      font-weight: 400;
+      font-style: italic;
+      margin-bottom: 2rem;
+    }
+
+    .splash p {
+      font-size: 0.95rem;
+      color: var(--khaki);
+      max-width: 480px;
+      margin-bottom: 2.5rem;
+      line-height: 1.8;
+    }
+
+    .enter-btn {
+      padding: 1rem 2.5rem;
+      background: var(--orange);
+      border: none;
+      border-radius: 4px;
+      color: var(--parchment);
+      font-family: 'Special Elite', monospace;
+      font-size: 1rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: transform 0.3s, box-shadow 0.3s, background 0.3s;
+    }
+
+    .enter-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+      background: #d4752a;
+    }
+
+    .splash-footer {
+      position: absolute;
+      bottom: 1.5rem;
+      font-size: 0.65rem;
+      color: rgba(181,166,125,0.4);
+      font-family: 'Special Elite', monospace;
+    }
+
+    /* MAIN CONTENT */
+    .content { display: none; }
+    .content.visible { display: block; }
+
+    /* Paper texture overlay */
+    .content::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background: url("data:image/svg+xml,%3Csvg width='100' height='100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    section {
+      position: relative;
+      z-index: 1;
+      max-width: 820px;
+      margin: 0 auto;
+      padding: 4rem 2rem;
+    }
+
+    .section-label {
+      font-family: 'Special Elite', monospace;
+      font-size: 0.75rem;
+      color: var(--orange);
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+    }
+
+    h2.section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      color: var(--green-deep);
+      margin-bottom: 1.5rem;
+      font-weight: 900;
+      line-height: 1.2;
+    }
+
+    .field-note {
+      background: white;
+      border: 1px solid var(--khaki);
+      border-left: 4px solid var(--green-mid);
+      padding: 1.5rem 2rem;
+      margin: 2rem 0;
+      position: relative;
+      font-size: 0.95rem;
+    }
+
+    .field-note::before {
+      content: 'FIELD NOTE';
+      position: absolute;
+      top: -0.6rem;
+      left: 1rem;
+      background: white;
+      padding: 0 0.5rem;
+      font-family: 'Special Elite', monospace;
+      font-size: 0.65rem;
+      color: var(--green-mid);
+      letter-spacing: 2px;
+    }
+
+    .divider {
+      width: 100%;
+      height: 1px;
+      background: linear-gradient(to right, transparent, var(--khaki), transparent);
+      margin: 1rem 0;
+    }
+
+    /* CLASSIFICATION CARD */
+    .classification-card {
+      background: white;
+      border: 2px solid var(--brown-light);
+      padding: 2.5rem;
+      margin: 2rem 0;
+      position: relative;
+    }
+
+    .classification-card::before {
+      content: 'SPECIMEN CLASSIFICATION';
+      position: absolute;
+      top: -0.7rem;
+      left: 2rem;
+      background: white;
+      padding: 0 0.75rem;
+      font-family: 'Special Elite', monospace;
+      font-size: 0.7rem;
+      color: var(--red-stamp);
+      letter-spacing: 3px;
+    }
+
+    .classification-card::after {
+      content: 'VERIFIED';
+      position: absolute;
+      top: 1.5rem;
+      right: 1.5rem;
+      font-family: 'Special Elite', monospace;
+      font-size: 1.2rem;
+      color: var(--red-stamp);
+      border: 3px solid var(--red-stamp);
+      padding: 0.25rem 0.75rem;
+      transform: rotate(12deg);
+      opacity: 0.7;
+    }
+
+    .taxon-row {
+      display: flex;
+      border-bottom: 1px solid var(--parchment-dark);
+      padding: 0.6rem 0;
+    }
+
+    .taxon-label {
+      font-family: 'Special Elite', monospace;
+      font-size: 0.75rem;
+      color: var(--text-dim);
+      letter-spacing: 1px;
+      width: 140px;
+      flex-shrink: 0;
+      text-transform: uppercase;
+    }
+
+    .taxon-value {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      color: var(--green-deep);
+    }
+
+    /* HABITAT MAP */
+    .habitat-map {
+      background: white;
+      border: 2px solid var(--khaki);
+      padding: 2rem;
+      margin: 2rem 0;
+      position: relative;
+    }
+
+    .habitat-map h3 {
+      font-family: 'Special Elite', monospace;
+      font-size: 0.85rem;
+      color: var(--brown);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+    }
+
+    .territory-bar {
+      margin-bottom: 1rem;
+    }
+
+    .territory-label {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.85rem;
+      margin-bottom: 0.3rem;
+    }
+
+    .territory-label span:first-child {
+      font-weight: 600;
+    }
+
+    .territory-track {
+      height: 24px;
+      background: var(--parchment);
+      border-radius: 2px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .territory-fill {
+      height: 100%;
+      border-radius: 2px;
+      width: 0;
+      transition: width 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+
+    .territory-fill.cape-town { background: var(--green-mid); }
+    .territory-fill.joburg { background: var(--orange); }
+    .territory-fill.london { background: var(--brown); }
+    .territory-fill.ocean { background: #3a7ca5; }
+
+    /* BEHAVIORAL TRACKER */
+    .behavior-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.5rem;
+      margin: 2rem 0;
+    }
+
+    .behavior-card {
+      background: white;
+      border: 1px solid var(--khaki);
+      padding: 1.5rem;
+      cursor: pointer;
+      transition: transform 0.3s, box-shadow 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .behavior-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+    }
+
+    .behavior-icon {
+      font-size: 2rem;
+      margin-bottom: 0.75rem;
+      display: block;
+    }
+
+    .behavior-card h4 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1rem;
+      color: var(--green-deep);
+      margin-bottom: 0.5rem;
+    }
+
+    .behavior-card p {
+      font-size: 0.8rem;
+      color: var(--text-dim);
+      line-height: 1.5;
+    }
+
+    .behavior-card .reveal {
+      display: none;
+      margin-top: 1rem;
+      padding-top: 1rem;
+      border-top: 1px solid var(--parchment-dark);
+      font-size: 0.8rem;
+      color: var(--orange);
+      font-style: italic;
+    }
+
+    .behavior-card.active .reveal {
+      display: block;
+    }
+
+    .behavior-card .click-hint {
+      font-family: 'Special Elite', monospace;
+      font-size: 0.6rem;
+      color: var(--khaki);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-top: 0.75rem;
+    }
+
+    .behavior-card.active .click-hint { display: none; }
+
+    /* COUNTER STATS */
+    .stat-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 1.5rem;
+      margin: 2rem 0;
+    }
+
+    .stat-box {
+      text-align: center;
+      padding: 1.5rem 1rem;
+      background: var(--green-deep);
+      color: var(--parchment);
+      border-radius: 4px;
+    }
+
+    .stat-number {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.5rem;
+      font-weight: 900;
+      display: block;
+      line-height: 1;
+    }
+
+    .stat-unit {
+      font-family: 'Special Elite', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--khaki);
+      margin-top: 0.5rem;
+      display: block;
+    }
+
+    /* TYPING EFFECT */
+    .narrator-box {
+      background: var(--green-deep);
+      color: var(--parchment);
+      padding: 2rem 2.5rem;
+      margin: 2rem 0;
+      border-radius: 4px;
+      position: relative;
+      min-height: 80px;
+    }
+
+    .narrator-box::before {
+      content: 'NARRATOR';
+      position: absolute;
+      top: -0.6rem;
+      left: 1.5rem;
+      background: var(--green-deep);
+      padding: 0 0.5rem;
+      font-family: 'Special Elite', monospace;
+      font-size: 0.6rem;
+      letter-spacing: 3px;
+      color: var(--khaki);
+    }
+
+    .narrator-text {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 1.1rem;
+      line-height: 1.8;
+    }
+
+    .narrator-cursor {
+      display: inline-block;
+      width: 2px;
+      height: 1.2em;
+      background: var(--orange);
+      margin-left: 2px;
+      animation: blink 0.8s infinite;
+      vertical-align: text-bottom;
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0; }
+    }
+
+    /* QUIZ */
+    .quiz-container {
+      background: white;
+      border: 2px solid var(--green-mid);
+      padding: 2.5rem;
+      margin: 2rem 0;
+    }
+
+    .quiz-container h3 {
+      font-family: 'Special Elite', monospace;
+      font-size: 0.85rem;
+      letter-spacing: 2px;
+      color: var(--green-mid);
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+    }
+
+    .quiz-question {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem;
+      color: var(--text);
+      margin-bottom: 1.5rem;
+    }
+
+    .quiz-options {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .quiz-option {
+      padding: 1rem 1.5rem;
+      border: 1px solid var(--khaki);
+      background: var(--parchment);
+      cursor: pointer;
+      font-family: inherit;
+      font-size: 0.95rem;
+      text-align: left;
+      transition: all 0.3s;
+      color: var(--text);
+    }
+
+    .quiz-option:hover {
+      border-color: var(--green-mid);
+      background: white;
+    }
+
+    .quiz-option.correct {
+      background: rgba(61,107,46,0.15);
+      border-color: var(--green-mid);
+      color: var(--green-deep);
+    }
+
+    .quiz-option.wrong {
+      background: rgba(196,101,42,0.1);
+      border-color: var(--orange);
+      color: var(--orange);
+    }
+
+    .quiz-option.disabled {
+      pointer-events: none;
+    }
+
+    .quiz-result {
+      margin-top: 1.5rem;
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      color: var(--green-deep);
+      display: none;
+    }
+
+    .quiz-nav {
+      margin-top: 1.5rem;
+      display: none;
+    }
+
+    .quiz-nav button {
+      padding: 0.75rem 1.5rem;
+      background: var(--green-deep);
+      color: var(--parchment);
+      border: none;
+      font-family: 'Special Elite', monospace;
+      font-size: 0.85rem;
+      letter-spacing: 1px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .quiz-nav button:hover { background: var(--green-mid); }
+
+    .quiz-score {
+      text-align: center;
+      padding: 2rem;
+      display: none;
+    }
+
+    .quiz-score .score-number {
+      font-family: 'Playfair Display', serif;
+      font-size: 3rem;
+      font-weight: 900;
+      color: var(--green-deep);
+    }
+
+    .quiz-score .score-label {
+      font-family: 'Special Elite', monospace;
+      font-size: 0.75rem;
+      letter-spacing: 2px;
+      color: var(--text-dim);
+      text-transform: uppercase;
+    }
+
+    .quiz-score .score-verdict {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 1.1rem;
+      color: var(--orange);
+      margin-top: 1rem;
+    }
+
+    /* MIGRATION CALCULATOR */
+    .calculator {
+      background: white;
+      border: 2px solid var(--brown-light);
+      padding: 2.5rem;
+      margin: 2rem 0;
+    }
+
+    .calculator h3 {
+      font-family: 'Special Elite', monospace;
+      font-size: 0.85rem;
+      letter-spacing: 2px;
+      color: var(--brown);
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+
+    .calc-slider-group {
+      margin-bottom: 1.5rem;
+    }
+
+    .calc-slider-group label {
+      display: block;
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+
+    .calc-slider-group input[type="range"] {
+      width: 100%;
+      accent-color: var(--green-mid);
+    }
+
+    .calc-slider-group .slider-value {
+      text-align: right;
+      font-family: 'Special Elite', monospace;
+      font-size: 0.85rem;
+      color: var(--orange);
+    }
+
+    .calc-output {
+      background: var(--parchment);
+      padding: 1.5rem;
+      margin-top: 1rem;
+      text-align: center;
+      border: 1px dashed var(--khaki);
+    }
+
+    .calc-output .calc-result {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem;
+      color: var(--green-deep);
+      font-weight: 700;
+    }
+
+    .calc-output .calc-note {
+      font-size: 0.8rem;
+      color: var(--text-dim);
+      margin-top: 0.5rem;
+      font-style: italic;
+    }
+
+    /* TIMELINE */
+    .timeline {
+      position: relative;
+      margin: 2rem 0;
+      padding-left: 2rem;
+    }
+
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: var(--khaki);
+    }
+
+    .timeline-item {
+      position: relative;
+      margin-bottom: 2rem;
+      padding-left: 1.5rem;
+    }
+
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      left: -2.35rem;
+      top: 0.5rem;
+      width: 12px;
+      height: 12px;
+      background: var(--orange);
+      border-radius: 50%;
+      border: 2px solid var(--parchment);
+    }
+
+    .timeline-year {
+      font-family: 'Special Elite', monospace;
+      font-size: 0.75rem;
+      color: var(--orange);
+      letter-spacing: 2px;
+    }
+
+    .timeline-text {
+      font-size: 0.95rem;
+      margin-top: 0.25rem;
+    }
+
+    /* SCROLL ANIMATIONS */
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.8s, transform 0.8s;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* FOOTER */
+    .site-footer {
+      text-align: center;
+      padding: 4rem 2rem;
+      background: var(--green-deep);
+      color: var(--khaki);
+      position: relative;
+      z-index: 1;
+    }
+
+    .site-footer h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8rem;
+      color: var(--parchment);
+      margin-bottom: 1rem;
+    }
+
+    .site-footer p {
+      font-size: 0.9rem;
+      max-width: 500px;
+      margin: 0 auto 2rem;
+      line-height: 1.8;
+    }
+
+    .footer-stamp {
+      font-family: 'Special Elite', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      opacity: 0.4;
+      margin-top: 2rem;
+    }
+
+    /* CORNER DECORATION */
+    .corner-decor {
+      position: fixed;
+      top: 1rem;
+      right: 1rem;
+      font-family: 'Special Elite', monospace;
+      font-size: 0.6rem;
+      color: var(--khaki-dark);
+      letter-spacing: 1px;
+      z-index: 100;
+      text-align: right;
+      opacity: 0.6;
+    }
+
+    /* SIGHTING COUNTER (Easter Egg) */
+    .sighting-counter {
+      position: fixed;
+      bottom: 1.5rem;
+      left: 1.5rem;
+      font-family: 'Special Elite', monospace;
+      font-size: 0.7rem;
+      color: var(--khaki-dark);
+      z-index: 100;
+      cursor: pointer;
+      opacity: 0.5;
+      transition: opacity 0.3s;
+    }
+
+    .sighting-counter:hover { opacity: 1; }
+
+    /* RESPONSIVE */
+    @media (max-width: 600px) {
+      section { padding: 3rem 1.25rem; }
+      .classification-card { padding: 1.5rem; }
+      .classification-card::after { font-size: 0.9rem; top: 0.75rem; right: 0.75rem; }
+      .taxon-row { flex-direction: column; }
+      .taxon-label { width: auto; margin-bottom: 0.1rem; }
+      .stat-row { grid-template-columns: repeat(2, 1fr); }
+      .narrator-box { padding: 1.5rem; }
+      .quiz-container, .calculator, .habitat-map { padding: 1.5rem; }
+    }
+
+    /* KONAMI SECRET */
+    .secret-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(45,74,34,0.97);
+      z-index: 20000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 2rem;
+    }
+
+    .secret-overlay.active { display: flex; }
+
+    .secret-content {
+      color: var(--parchment);
+      max-width: 500px;
+    }
+
+    .secret-content h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem;
+      margin-bottom: 1rem;
+    }
+
+    .secret-content p {
+      font-size: 1rem;
+      line-height: 1.8;
+      margin-bottom: 1.5rem;
+      color: var(--khaki);
+    }
+
+    .secret-close {
+      padding: 0.75rem 2rem;
+      background: var(--orange);
+      border: none;
+      color: white;
+      font-family: 'Special Elite', monospace;
+      font-size: 0.85rem;
+      letter-spacing: 1px;
+      cursor: pointer;
+    }
+
+    /* Danger level meter */
+    .danger-meter {
+      margin: 2rem 0;
+      background: white;
+      border: 1px solid var(--khaki);
+      padding: 1.5rem 2rem;
+    }
+
+    .danger-meter h4 {
+      font-family: 'Special Elite', monospace;
+      font-size: 0.75rem;
+      letter-spacing: 2px;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+
+    .danger-bar-track {
+      height: 30px;
+      background: linear-gradient(to right, var(--green-mid), #b8a830, var(--orange), var(--red-stamp));
+      border-radius: 3px;
+      position: relative;
+    }
+
+    .danger-bar-marker {
+      position: absolute;
+      top: -8px;
+      bottom: -8px;
+      width: 4px;
+      background: var(--ink);
+      border-radius: 2px;
+      left: 0%;
+      transition: left 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+
+    .danger-labels {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 0.5rem;
+      font-size: 0.7rem;
+      font-family: 'Special Elite', monospace;
+      color: var(--text-dim);
+    }
+
+    /* Watermark */
+    .watermark {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) rotate(-35deg);
+      font-family: 'Special Elite', monospace;
+      font-size: 8rem;
+      color: rgba(139,32,32,0.03);
+      pointer-events: none;
+      z-index: 0;
+      white-space: nowrap;
+      letter-spacing: 0.5rem;
+    }
+  </style>
+</head>
+<body>
+
+<!-- SPLASH SCREEN -->
+<div class="splash" id="splash">
+  <div class="splash-stamp">
+    <span class="splash-stamp-text">CPWA<br>EST. 1847</span>
+  </div>
+  <div class="splash-header">Cape Peninsula Wildlife Authority</div>
+  <h1>CLASSIFIED FIELD STUDY</h1>
+  <h2>Study #4471: Claxtonus Technologicus</h2>
+  <p>
+    The following document contains sensitive observations regarding an apex species
+    discovered in the greater Cape Town peninsula. Unauthorized distribution is prohibited
+    under the Endangered Genius Species Act of 2003.
+  </p>
+  <button class="enter-btn" onclick="enterSite()">Access Field Report</button>
+  <div class="splash-footer">CPWA Document Clearance Level: Extraordinary</div>
+</div>
+
+<!-- SECRET OVERLAY (Konami) -->
+<div class="secret-overlay" id="secretOverlay">
+  <div class="secret-content">
+    <h2>&#127758; CLASSIFIED ADDENDUM</h2>
+    <p>
+      Our field researchers have confirmed: specimens of <em>Claxtonus Technologicus</em>
+      exhibit a rare phenomenon known as "Entrepreneurial Luminescence," a soft glow visible
+      only during board meetings and sunset surf sessions. The specimen's natural charisma
+      has been measured at 4.7 times the baseline for the genus <em>Homo CEOicus</em>.
+    </p>
+    <p>
+      Furthermore, analysis of the specimen's mentorship output suggests that by 2030,
+      approximately 40% of all IT leaders in Southern Africa will trace their professional
+      lineage directly to this individual.
+    </p>
+    <button class="secret-close" onclick="closeSecret()">Seal Document</button>
+  </div>
+</div>
+
+<!-- WATERMARK -->
+<div class="watermark">CLASSIFIED</div>
+
+<!-- CORNER LABEL -->
+<div class="corner-decor" id="cornerDecor" style="display:none;">
+  STUDY #4471<br>CLEARANCE: MAX
+</div>
+
+<!-- SIGHTING COUNTER -->
+<div class="sighting-counter" id="sightingCounter" style="display:none;" onclick="incrementSighting()">
+  SIGHTINGS LOGGED: <span id="sightingNum">0</span>
+</div>
+
+<!-- MAIN CONTENT -->
+<div class="content" id="mainContent">
+
+  <!-- SECTION 1: SPECIES OVERVIEW -->
+  <section>
+    <div class="reveal">
+      <div class="section-label">Section I</div>
+      <h2 class="section-title">Species Overview</h2>
+      <p>
+        First documented in the Cape Town basin circa 2003, <em>Claxtonus Technologicus</em>
+        (common name: "The Claxton") is among the most remarkable apex specimens ever recorded
+        in the Southern Hemisphere's technology ecosystem. Exhibiting an unusual combination of
+        calm territorial focus and expansive migratory ambition, the species has established
+        thriving colonies across three continents.
+      </p>
+    </div>
+
+    <div class="reveal classification-card">
+      <div class="taxon-row">
+        <span class="taxon-label">Kingdom</span>
+        <span class="taxon-value">Entrepreneuria</span>
+      </div>
+      <div class="taxon-row">
+        <span class="taxon-label">Phylum</span>
+        <span class="taxon-value">Microsoftia Partneria</span>
+      </div>
+      <div class="taxon-row">
+        <span class="taxon-label">Class</span>
+        <span class="taxon-value">Founderus Executivus</span>
+      </div>
+      <div class="taxon-row">
+        <span class="taxon-label">Order</span>
+        <span class="taxon-value">Mentorum Suprema</span>
+      </div>
+      <div class="taxon-row">
+        <span class="taxon-label">Family</span>
+        <span class="taxon-value">Solididae Systemaceae</span>
+      </div>
+      <div class="taxon-row">
+        <span class="taxon-label">Genus</span>
+        <span class="taxon-value">Claxtonus</span>
+      </div>
+      <div class="taxon-row">
+        <span class="taxon-label">Species</span>
+        <span class="taxon-value">C. technologicus</span>
+      </div>
+      <div class="taxon-row">
+        <span class="taxon-label">Status</span>
+        <span class="taxon-value">Apex. Not endangered. The ecosystem depends on him.</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 2: NARRATOR / ATTENBOROUGH -->
+  <section>
+    <div class="reveal">
+      <div class="narrator-box" id="narratorBox1">
+        <span class="narrator-text" id="narratorText1"></span><span class="narrator-cursor" id="cursor1"></span>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 3: HABITAT & TERRITORY -->
+  <section>
+    <div class="reveal">
+      <div class="section-label">Section II</div>
+      <h2 class="section-title">Habitat &amp; Territorial Range</h2>
+      <p>
+        The species maintains an extraordinary migratory circuit spanning 9,600 kilometres,
+        moving fluidly between nesting sites in Cape Town, Johannesburg, and London. Researchers
+        note that the specimen's navigational instinct is unerring, always returning to the
+        primary habitat along the Atlantic seaboard where it was first observed establishing
+        its flagship colony, Solid Systems, in 2003.
+      </p>
+    </div>
+
+    <div class="reveal habitat-map">
+      <h3>Territorial Distribution Analysis</h3>
+      <div class="territory-bar">
+        <div class="territory-label"><span>Cape Town (Primary Nest)</span><span>42%</span></div>
+        <div class="territory-track"><div class="territory-fill cape-town" data-width="42"></div></div>
+      </div>
+      <div class="territory-bar">
+        <div class="territory-label"><span>Johannesburg (Secondary Colony)</span><span>25%</span></div>
+        <div class="territory-track"><div class="territory-fill joburg" data-width="25"></div></div>
+      </div>
+      <div class="territory-bar">
+        <div class="territory-label"><span>London (Overseas Outpost)</span><span>18%</span></div>
+        <div class="territory-track"><div class="territory-fill london" data-width="18"></div></div>
+      </div>
+      <div class="territory-bar">
+        <div class="territory-label"><span>The Ocean (Spiritual Domain)</span><span>15%</span></div>
+        <div class="territory-track"><div class="territory-fill ocean" data-width="15"></div></div>
+      </div>
+    </div>
+
+    <div class="reveal field-note">
+      <p>
+        <strong>Observation 2.4:</strong> When separated from the ocean for more than 72 hours, the
+        specimen exhibits a behavioral pattern our team has classified as "Surf Withdrawal Syndrome"
+        (SWS), characterised by restless pacing near windows, unconscious paddling motions during
+        conference calls, and a marked increase in the use of the phrase "we should take this offline."
+      </p>
+    </div>
+  </section>
+
+  <!-- SECTION 4: VITAL STATISTICS -->
+  <section>
+    <div class="reveal">
+      <div class="section-label">Section III</div>
+      <h2 class="section-title">Vital Statistics</h2>
+      <p>
+        A comprehensive biometric survey, conducted over two decades of continuous observation.
+      </p>
+    </div>
+
+    <div class="reveal stat-row">
+      <div class="stat-box">
+        <span class="stat-number counter" data-target="21">0</span>
+        <span class="stat-unit">Years in the Wild (est. 2003)</span>
+      </div>
+      <div class="stat-box">
+        <span class="stat-number counter" data-target="3">0</span>
+        <span class="stat-unit">Continental Territories</span>
+      </div>
+      <div class="stat-box">
+        <span class="stat-number counter" data-target="2">0</span>
+        <span class="stat-unit">Offspring (Verified)</span>
+      </div>
+      <div class="stat-box">
+        <span class="stat-number">&#8734;</span>
+        <span class="stat-unit">Mentees Influenced</span>
+      </div>
+    </div>
+
+    <div class="reveal danger-meter">
+      <h4>Threat Level to Competing Species</h4>
+      <div class="danger-bar-track">
+        <div class="danger-bar-marker" id="dangerMarker" data-position="78"></div>
+      </div>
+      <div class="danger-labels">
+        <span>Harmless</span>
+        <span>Notable</span>
+        <span>Formidable</span>
+        <span>Apex</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 5: BEHAVIORAL PATTERNS -->
+  <section>
+    <div class="reveal">
+      <div class="section-label">Section IV</div>
+      <h2 class="section-title">Documented Behavioral Patterns</h2>
+      <p>
+        Our field researchers have catalogued the following recurring behaviors. Click each card
+        to reveal the research team's extended observations.
+      </p>
+    </div>
+
+    <div class="reveal behavior-grid">
+      <div class="behavior-card" onclick="toggleBehavior(this)">
+        <span class="behavior-icon">&#9978;</span>
+        <h4>The Dawn Patrol</h4>
+        <p>Specimen is observed entering the ocean at first light, regardless of water temperature or pending board meetings.</p>
+        <div class="reveal">Researchers theorise this ritual serves as the specimen's "biological reboot sequence." Post surf, cognitive output increases by an estimated 340%. The specimen's unique ability to close enterprise deals while still damp from the Atlantic has been termed "Wetsuit Diplomacy."</div>
+        <div class="click-hint">&#9654; Expand observation</div>
+      </div>
+      <div class="behavior-card" onclick="toggleBehavior(this)">
+        <span class="behavior-icon">&#9881;</span>
+        <h4>The Microsoft Whisperer</h4>
+        <p>Displays a near symbiotic relationship with the Microsoft ecosystem, communicating in fluent Azure.</p>
+        <div class="reveal">Brain scans reveal that when the specimen encounters a Microsoft product, its neural pathways illuminate in the exact pattern of the Windows logo. The specimen can reportedly diagnose a SharePoint issue by smell alone. This ability is believed to be genetic, though no other members of the species share it.</div>
+        <div class="click-hint">&#9654; Expand observation</div>
+      </div>
+      <div class="behavior-card" onclick="toggleBehavior(this)">
+        <span class="behavior-icon">&#9968;</span>
+        <h4>The Trail Signal</h4>
+        <p>Periodically retreats to mountainous terrain on two wheels at velocities that concern our tracking equipment.</p>
+        <div class="reveal">Mountain biking appears to serve as the specimen's secondary processing mode. Complex business problems enter the brain at the trailhead and emerge as fully formed strategies at the summit. Our GPS data suggests the specimen's preferred trails map precisely to the neural pathways of strategic thinking. Coincidence? The research committee thinks not.</div>
+        <div class="click-hint">&#9654; Expand observation</div>
+      </div>
+      <div class="behavior-card" onclick="toggleBehavior(this)">
+        <span class="behavior-icon">&#9733;</span>
+        <h4>The Mentorship Cascade</h4>
+        <p>Exhibits a compulsive need to elevate every organism within its vicinity, described as "leadership nurturing."</p>
+        <div class="reveal">This is perhaps the specimen's most extraordinary adaptation. Every individual who spends more than 30 minutes in the specimen's presence reports an overwhelming urge to "level up." The phenomenon, which our team calls the "Claxton Effect," has been directly responsible for an estimated 200+ career transformations. The specimen's own description of this ability as a "unique skill in nurturing leadership qualities in others" is, in our professional assessment, a severe understatement.</div>
+        <div class="click-hint">&#9654; Expand observation</div>
+      </div>
+      <div class="behavior-card" onclick="toggleBehavior(this)">
+        <span class="behavior-icon">&#9829;</span>
+        <h4>The Human Connection Protocol</h4>
+        <p>Despite operating in the technology sector, insists that the primary function of technology is "elevating human connection."</p>
+        <div class="reveal">Our ethologists were initially puzzled by this behavior. A technology apex predator that prioritises human warmth? Further study revealed this is not a contradiction but the specimen's ultimate competitive advantage. By treating every client, employee, and partner as a fellow creature worthy of genuine connection, the specimen has built something our models previously considered impossible: an IT company that people actually enjoy working with.</div>
+        <div class="click-hint">&#9654; Expand observation</div>
+      </div>
+      <div class="behavior-card" onclick="toggleBehavior(this)">
+        <span class="behavior-icon">&#9202;</span>
+        <h4>The Calm Focus State</h4>
+        <p>Under extreme pressure, the specimen's heart rate decreases rather than increases. Researchers remain baffled.</p>
+        <div class="reveal">Multiple attempts to induce stress in the specimen (simulated server outages, surprise audits, double bookings) have all failed. The specimen simply enters what it describes as "calm focus," a state so serene that nearby colleagues report feeling their own anxiety dissolve. Brain wave analysis during these episodes shows patterns identical to those recorded in Zen monasteries. The specimen, however, was wearing a wetsuit at the time of measurement.</div>
+        <div class="click-hint">&#9654; Expand observation</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 6: NARRATOR 2 -->
+  <section>
+    <div class="reveal">
+      <div class="narrator-box" id="narratorBox2">
+        <span class="narrator-text" id="narratorText2"></span><span class="narrator-cursor" id="cursor2" style="display:none;"></span>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 7: EVOLUTIONARY TIMELINE -->
+  <section>
+    <div class="reveal">
+      <div class="section-label">Section V</div>
+      <h2 class="section-title">Evolutionary Timeline</h2>
+      <p>
+        A chronological record of key evolutionary milestones observed in the specimen's development.
+      </p>
+    </div>
+
+    <div class="reveal timeline">
+      <div class="timeline-item">
+        <span class="timeline-year">2003</span>
+        <p class="timeline-text"><strong>Colony Establishment.</strong> The specimen co-founds Solid Systems in Cape Town. Early observers dismiss it as a "small IT firm." They are profoundly wrong.</p>
+      </div>
+      <div class="timeline-item">
+        <span class="timeline-year">2008</span>
+        <p class="timeline-text"><strong>First Territorial Expansion.</strong> The colony extends to Johannesburg. The specimen demonstrates the rare ability to maintain cultural cohesion across 1,400 kilometres of savanna.</p>
+      </div>
+      <div class="timeline-item">
+        <span class="timeline-year">2012</span>
+        <p class="timeline-text"><strong>The EO Convergence.</strong> Specimen joins the Entrepreneurs' Organization, establishing alliances with other apex species across the globe. Migration patterns become intercontinental.</p>
+      </div>
+      <div class="timeline-item">
+        <span class="timeline-year">2016</span>
+        <p class="timeline-text"><strong>Transatlantic Migration.</strong> A London outpost is established. The specimen is now confirmed present on two continents. The colony's tagline, "elevating human connection," begins appearing in academic literature as a case study in species differentiation.</p>
+      </div>
+      <div class="timeline-item">
+        <span class="timeline-year">2020</span>
+        <p class="timeline-text"><strong>The Great Digital Migration.</strong> A global disruption forces most species indoors. The specimen thrives, proving that 20 years of building genuine human connections translate seamlessly into virtual habitats. The colony reports record engagement.</p>
+      </div>
+      <div class="timeline-item">
+        <span class="timeline-year">Present</span>
+        <p class="timeline-text"><strong>Apex Status Confirmed.</strong> Two decades of sustained growth. Three continents. Countless mentees. The specimen continues to demonstrate that calm focus, human connection, and a good morning surf are the true keys to ecosystem dominance.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 8: SPECIMEN IDENTIFICATION QUIZ -->
+  <section>
+    <div class="reveal">
+      <div class="section-label">Section VI</div>
+      <h2 class="section-title">Specimen Identification Exam</h2>
+      <p>
+        All field researchers must pass the following assessment before being granted
+        observation privileges. Test your knowledge of <em>C. technologicus</em>.
+      </p>
+    </div>
+
+    <div class="reveal quiz-container" id="quizContainer">
+      <h3>&#9998; Field Assessment</h3>
+      <div id="quizContent">
+        <div class="quiz-question" id="quizQuestion"></div>
+        <div class="quiz-options" id="quizOptions"></div>
+        <div class="quiz-result" id="quizResult"></div>
+        <div class="quiz-nav" id="quizNav">
+          <button onclick="nextQuestion()">Next Observation &#9654;</button>
+        </div>
+      </div>
+      <div class="quiz-score" id="quizScore">
+        <div class="score-number" id="finalScore"></div>
+        <div class="score-label">Field Competency Rating</div>
+        <div class="score-verdict" id="scoreVerdict"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 9: MIGRATION IMPACT CALCULATOR -->
+  <section>
+    <div class="reveal">
+      <div class="section-label">Section VII</div>
+      <h2 class="section-title">Impact Projection Model</h2>
+      <p>
+        Using our proprietary "Claxton Coefficient," calculate the projected influence
+        radius based on key environmental variables.
+      </p>
+    </div>
+
+    <div class="reveal calculator">
+      <h3>&#9874; Claxton Coefficient Calculator</h3>
+
+      <div class="calc-slider-group">
+        <label>Proximity to Ocean (km)</label>
+        <input type="range" min="0" max="100" value="5" id="sliderOcean" oninput="updateCalc()">
+        <div class="slider-value" id="valOcean">5 km</div>
+      </div>
+
+      <div class="calc-slider-group">
+        <label>Hours Since Last Surf Session</label>
+        <input type="range" min="0" max="72" value="2" id="sliderSurf" oninput="updateCalc()">
+        <div class="slider-value" id="valSurf">2 hours</div>
+      </div>
+
+      <div class="calc-slider-group">
+        <label>Number of Mentees in Room</label>
+        <input type="range" min="0" max="50" value="8" id="sliderMentees" oninput="updateCalc()">
+        <div class="slider-value" id="valMentees">8 mentees</div>
+      </div>
+
+      <div class="calc-slider-group">
+        <label>Microsoft Products Active</label>
+        <input type="range" min="0" max="20" value="7" id="sliderMS" oninput="updateCalc()">
+        <div class="slider-value" id="valMS">7 products</div>
+      </div>
+
+      <div class="calc-output">
+        <div class="calc-result" id="calcResult">Loading analysis...</div>
+        <div class="calc-note" id="calcNote"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 10: CONSERVATION STATUS -->
+  <section>
+    <div class="reveal">
+      <div class="section-label">Section VIII</div>
+      <h2 class="section-title">Conservation Status &amp; Recommendations</h2>
+      <p>
+        After two decades of continuous field observation, the Cape Peninsula Wildlife Authority's
+        assessment is unequivocal: <em>Claxtonus Technologicus</em> is not merely surviving. It is
+        defining the ecosystem.
+      </p>
+    </div>
+
+    <div class="reveal field-note">
+      <p>
+        <strong>Final Assessment:</strong> The specimen represents a convergence of traits so rare that
+        our classification models required a firmware update. A technology leader who genuinely cares
+        about people. A surfer who can close enterprise deals. A mountain biker who mentors with the
+        patience of a monk. A father of two who still finds time to build a company across three
+        countries. The research team's unanimous conclusion: this is not an endangered species. This is
+        the species the rest of the ecosystem aspires to become.
+      </p>
+    </div>
+
+    <div class="reveal narrator-box" id="narratorBox3">
+      <span class="narrator-text" id="narratorText3"></span><span class="narrator-cursor" id="cursor3" style="display:none;"></span>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <div class="site-footer">
+    <h2>End of Field Report</h2>
+    <p>
+      This document was prepared with the utmost scientific rigour and an inappropriate
+      amount of admiration by the Cape Peninsula Wildlife Authority, Field Studies Division.
+    </p>
+    <p style="font-size: 0.8rem; opacity: 0.6;">
+      For the record: Michael, you are an extraordinary specimen. Keep surfing. Keep mentoring.
+      Keep building things that connect people. The ecosystem needs you.
+    </p>
+    <div class="footer-stamp">
+      CPWA &#8226; Document #4471 &#8226; Classification: Legendary &#8226; Do Not Destroy
+    </div>
+  </div>
+</div>
+
+<script>
+  // ========== SPLASH ==========
+  function enterSite() {
+    document.getElementById('splash').classList.add('hidden');
+    document.getElementById('mainContent').classList.add('visible');
+    document.getElementById('cornerDecor').style.display = 'block';
+    document.getElementById('sightingCounter').style.display = 'block';
+    setTimeout(initObservers, 300);
+    // Log to console (Easter egg)
+    console.log('%c CAPE PENINSULA WILDLIFE AUTHORITY ', 'background: #2d4a22; color: #f4edd3; font-size: 14px; padding: 8px; font-family: monospace;');
+    console.log('%c Study #4471: Claxtonus Technologicus ', 'color: #c4652a; font-size: 11px; font-family: monospace;');
+    console.log('%c If you are reading this, you are either a developer or a very thorough field researcher. Either way, Michael Claxton is extraordinary and you know it. ', 'color: #6b5f4e; font-size: 10px;');
+  }
+
+  // ========== SCROLL REVEAL ==========
+  function initObservers() {
+    const reveals = document.querySelectorAll('.reveal:not(.visible)');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry, i) => {
+        if (entry.isIntersecting) {
+          setTimeout(() => {
+            entry.target.classList.add('visible');
+            // Trigger territory bars
+            entry.target.querySelectorAll('.territory-fill').forEach(bar => {
+              bar.style.width = bar.dataset.width + '%';
+            });
+            // Trigger counters
+            entry.target.querySelectorAll('.counter').forEach(animateCounter);
+            // Trigger danger marker
+            const marker = entry.target.querySelector('#dangerMarker');
+            if (marker) marker.style.left = marker.dataset.position + '%';
+            // Trigger narrators
+            if (entry.target.closest('#narratorBox1') || entry.target.querySelector('#narratorBox1')) triggerNarrator(1);
+            if (entry.target.closest('#narratorBox2') || entry.target.querySelector('#narratorBox2')) triggerNarrator(2);
+            if (entry.target.closest('#narratorBox3') || entry.target.querySelector('#narratorBox3')) triggerNarrator(3);
+          }, i * 100);
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15 });
+
+    reveals.forEach(el => observer.observe(el));
+  }
+
+  // ========== COUNTER ANIMATION ==========
+  function animateCounter(el) {
+    if (el.dataset.animated) return;
+    el.dataset.animated = '1';
+    const target = parseInt(el.dataset.target);
+    if (isNaN(target)) return;
+    let current = 0;
+    const step = Math.max(1, Math.floor(target / 40));
+    const interval = setInterval(() => {
+      current += step;
+      if (current >= target) { current = target; clearInterval(interval); }
+      el.textContent = current;
+    }, 40);
+  }
+
+  // ========== NARRATOR TYPING ==========
+  const narratorTexts = {
+    1: "And here, in the crystalline waters of the Atlantic, we observe the specimen in its most natural state. Watch as it transitions seamlessly from reading quarterly reports to reading wave patterns. The calm focus is remarkable. One might almost forget this creature manages a technology empire spanning three nations. Almost.",
+    2: "What sets this particular specimen apart from the common CEO is not its territorial range, nor its Microsoft fluency, though both are formidable. It is the quiet, persistent way it elevates every organism it encounters. In twenty years of field work, this researcher has never documented a more effective mentorship instinct. It appears to be completely involuntary.",
+    3: "And so we close our field notes on Claxtonus Technologicus, perhaps the finest specimen this Authority has ever had the privilege to study. As the sun sets over Table Mountain and the specimen paddles out for one final wave, we are reminded that true apex status is not about dominance. It is about elevation. Of others. Of standards. Of human connection itself."
+  };
+
+  const narratorTriggered = {};
+
+  function triggerNarrator(n) {
+    if (narratorTriggered[n]) return;
+    narratorTriggered[n] = true;
+    const el = document.getElementById('narratorText' + n);
+    const cursor = document.getElementById('cursor' + n);
+    const text = narratorTexts[n];
+    cursor.style.display = 'inline-block';
+    let i = 0;
+    const type = () => {
+      if (i < text.length) {
+        el.textContent += text[i];
+        i++;
+        setTimeout(type, 25 + Math.random() * 20);
+      } else {
+        setTimeout(() => { cursor.style.display = 'none'; }, 2000);
+      }
+    };
+    type();
+  }
+
+  // ========== BEHAVIOR CARDS ==========
+  function toggleBehavior(card) {
+    card.classList.toggle('active');
+  }
+
+  // ========== QUIZ ==========
+  const quizData = [
+    {
+      q: "What year did Claxtonus Technologicus establish its first colony (Solid Systems)?",
+      opts: ["1997", "2003", "2010", "The specimen has existed since the dawn of time"],
+      correct: 1,
+      explain: "Correct. The colony was founded in 2003 in Cape Town, quickly establishing itself as a keystone species in the Microsoft partner ecosystem."
+    },
+    {
+      q: "How many continental territories does the specimen currently maintain?",
+      opts: ["One (Cape Town only)", "Two (South Africa and UK)", "Three (Cape Town, Johannesburg, London)", "Seven (classified)"],
+      correct: 2,
+      explain: "Precisely. The specimen's migratory circuit spans Cape Town, Johannesburg, and London, an impressive territorial range for any species."
+    },
+    {
+      q: "What is the specimen's primary method of cognitive recalibration?",
+      opts: ["Meditation retreats", "Surfing at dawn", "Spreadsheet analysis", "Aggressive PowerPoint creation"],
+      correct: 1,
+      explain: "Our telemetry confirms: the dawn surf session is the specimen's primary reboot sequence. All major decisions correlate with ocean proximity."
+    },
+    {
+      q: "The specimen's company tagline references which concept?",
+      opts: ["Digital transformation", "Cloud supremacy", "Elevating human connection", "Moving fast and breaking things"],
+      correct: 2,
+      explain: "Solid Systems' core philosophy centres on elevating human connection, a behavioural trait so rare in the technology sector that our taxonomists initially classified it as an anomaly."
+    },
+    {
+      q: "Which professional organisation does the specimen belong to?",
+      opts: ["The Surfers' Guild", "Entrepreneurs' Organization", "The Microsoft Whisperers' Society", "Cape Peninsula Wildlife Authority (as a consultant)"],
+      correct: 1,
+      explain: "The Entrepreneurs' Organization. Though our research team suspects the specimen could legitimately belong to all four options."
+    }
+  ];
+
+  let currentQ = 0;
+  let score = 0;
+
+  function loadQuestion() {
+    const q = quizData[currentQ];
+    document.getElementById('quizQuestion').textContent = (currentQ + 1) + '. ' + q.q;
+    const optsContainer = document.getElementById('quizOptions');
+    optsContainer.innerHTML = '';
+    q.opts.forEach((opt, i) => {
+      const btn = document.createElement('button');
+      btn.className = 'quiz-option';
+      btn.textContent = opt;
+      btn.onclick = () => answerQuestion(i);
+      optsContainer.appendChild(btn);
+    });
+    document.getElementById('quizResult').style.display = 'none';
+    document.getElementById('quizNav').style.display = 'none';
+  }
+
+  function answerQuestion(idx) {
+    const q = quizData[currentQ];
+    const opts = document.querySelectorAll('.quiz-option');
+    opts.forEach((o, i) => {
+      o.classList.add('disabled');
+      if (i === q.correct) o.classList.add('correct');
+      else if (i === idx) o.classList.add('wrong');
+    });
+    if (idx === q.correct) score++;
+    const result = document.getElementById('quizResult');
+    result.textContent = idx === q.correct ? q.explain : 'Incorrect. ' + q.explain;
+    result.style.display = 'block';
+    if (currentQ < quizData.length - 1) {
+      document.getElementById('quizNav').style.display = 'block';
+    } else {
+      setTimeout(showScore, 1500);
+    }
+  }
+
+  function nextQuestion() {
+    currentQ++;
+    loadQuestion();
+  }
+
+  function showScore() {
+    document.getElementById('quizContent').style.display = 'none';
+    const scoreEl = document.getElementById('quizScore');
+    scoreEl.style.display = 'block';
+    document.getElementById('finalScore').textContent = score + '/' + quizData.length;
+    const verdicts = {
+      5: "Exceptional. You are granted Level 5 observation privileges. The specimen would be proud.",
+      4: "Strong field competency. You clearly have significant exposure to the species.",
+      3: "Adequate. You may observe from a distance of no less than 50 metres.",
+      2: "Concerning gaps in specimen knowledge. Additional study required.",
+      1: "We recommend starting with a less complex species.",
+      0: "Your application to the field research program has been declined."
+    };
+    document.getElementById('scoreVerdict').textContent = verdicts[score];
+  }
+
+  loadQuestion();
+
+  // ========== CALCULATOR ==========
+  function updateCalc() {
+    const ocean = parseInt(document.getElementById('sliderOcean').value);
+    const surf = parseInt(document.getElementById('sliderSurf').value);
+    const mentees = parseInt(document.getElementById('sliderMentees').value);
+    const ms = parseInt(document.getElementById('sliderMS').value);
+
+    document.getElementById('valOcean').textContent = ocean + ' km';
+    document.getElementById('valSurf').textContent = surf + ' hours';
+    document.getElementById('valMentees').textContent = mentees + ' mentees';
+    document.getElementById('valMS').textContent = ms + ' products';
+
+    // The Claxton Coefficient
+    const oceanFactor = Math.max(0.1, 1 - (ocean / 120));
+    const surfPenalty = Math.max(0.2, 1 - (surf / 100));
+    const menteePower = 1 + (mentees * 0.15);
+    const msBoost = 1 + (ms * 0.08);
+
+    const coefficient = (oceanFactor * surfPenalty * menteePower * msBoost * 100).toFixed(1);
+
+    const resultEl = document.getElementById('calcResult');
+    const noteEl = document.getElementById('calcNote');
+
+    resultEl.textContent = 'Claxton Coefficient: ' + coefficient;
+
+    if (coefficient > 200) {
+      noteEl.textContent = 'WARNING: Influence radius exceeds measurement capacity. Nearby organisms may spontaneously develop leadership skills.';
+    } else if (coefficient > 100) {
+      noteEl.textContent = 'Optimal conditions detected. The specimen is operating at peak capacity. Stand clear of the mentorship blast radius.';
+    } else if (coefficient > 50) {
+      noteEl.textContent = 'Standard operating range. The specimen remains formidable but has not yet had its morning surf.';
+    } else {
+      noteEl.textContent = 'Below baseline. The specimen urgently requires ocean access. Deploy surfboard immediately.';
+    }
+  }
+
+  updateCalc();
+
+  // ========== SIGHTING COUNTER (Easter Egg 1) ==========
+  let sightings = 0;
+  function incrementSighting() {
+    sightings++;
+    document.getElementById('sightingNum').textContent = sightings;
+    if (sightings === 10) {
+      alert('You have logged 10 sightings. The Cape Peninsula Wildlife Authority thanks you for your dedication. Michael Claxton has been notified of your enthusiasm.');
+    }
+    if (sightings === 25) {
+      document.getElementById('sightingCounter').style.color = 'var(--orange)';
+      document.getElementById('sightingCounter').style.opacity = '1';
+    }
+  }
+
+  // ========== KONAMI CODE (Easter Egg 2) ==========
+  const konamiCode = [38,38,40,40,37,39,37,39,66,65];
+  let konamiIndex = 0;
+
+  document.addEventListener('keydown', (e) => {
+    if (e.keyCode === konamiCode[konamiIndex]) {
+      konamiIndex++;
+      if (konamiIndex === konamiCode.length) {
+        document.getElementById('secretOverlay').classList.add('active');
+        konamiIndex = 0;
+      }
+    } else {
+      konamiIndex = 0;
+    }
+  });
+
+  function closeSecret() {
+    document.getElementById('secretOverlay').classList.remove('active');
+  }
+</script>
+</body>
+</html>
